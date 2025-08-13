@@ -4,6 +4,14 @@
 
 A comprehensive dashboard for managing AI agents, built specifically for Tax4US business automation needs.
 
+## ✅ Deployment Status
+
+**🌐 Live Application:** https://production-a74p1ssiu-shais-projects-f9b9e359.vercel.app  
+**📁 GitHub Repository:** https://github.com/imsuperseller/tax4us-agent-system  
+**🔗 Vercel Project:** Connected with automatic deployments  
+**📅 Last Updated:** August 13, 2024  
+**🔄 Auto-Deploy:** ✅ Enabled (pushes to main trigger production deployment)
+
 ## ✨ Features
 
 - **🤖 AI Agent Management** - Monitor and control multiple AI agents
@@ -21,21 +29,20 @@ A comprehensive dashboard for managing AI agents, built specifically for Tax4US 
 - **Styling:** Tailwind CSS with custom design system
 - **Animations:** Framer Motion
 - **Localization:** Hebrew with RTL support
-- **Deployment:** Vercel (recommended)
+- **Deployment:** Vercel (automated)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-
 - Node.js 18+ 
 - npm or yarn
+- Git
 
 ### Installation
-
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd tax4us-agent-management
+git clone https://github.com/imsuperseller/tax4us-agent-system.git
+cd tax4us-agent-system
 
 # Install dependencies
 npm install
@@ -45,25 +52,14 @@ npm run dev
 ```
 
 ### Environment Variables
-
-Create a `.env.local` file:
-
-```env
-# MCP Hub Configuration
-MCP_HUB_URL=http://173.254.201.134:4000
-
-# WordPress Agent Configuration
-WORDPRESS_API_URL=your-wordpress-site.com
-WORDPRESS_USERNAME=your-username
-WORDPRESS_PASSWORD=your-application-password
-
-# OpenAI Configuration (if needed)
-OPENAI_API_KEY=your-openai-api-key
+```bash
+NODE_ENV=production
 ```
 
 ## 📁 Project Structure
 
 ```
+tax4us-agent-system/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   ├── globals.css        # Global styles
@@ -71,159 +67,133 @@ OPENAI_API_KEY=your-openai-api-key
 │   └── page.tsx           # Main dashboard
 ├── components/            # React components
 │   └── ui/               # UI components
-├── lib/                  # Utilities and configurations
-│   ├── i18n.ts          # Hebrew localization
+├── lib/                  # Utilities and helpers
+│   ├── i18n.ts          # Hebrew translations
 │   └── utils.ts         # Utility functions
+├── wordpress-agent-api/  # WordPress agent backend
 └── public/              # Static assets
 ```
 
 ## 🌐 Hebrew Localization
 
-The app is fully localized in Hebrew with RTL support:
+The application is fully localized in Hebrew with RTL support:
 
-- All UI text in Hebrew
-- Technical terms remain in English
-- RTL layout support
-- Hebrew font optimization (Heebo)
+- **UI Text:** All user-facing text in Hebrew
+- **Technical Terms:** Kept in English (API, MCP, etc.)
+- **RTL Layout:** Right-to-left text direction
+- **Font:** Heebo font for optimal Hebrew display
 
 ## 🤖 AI Agents
 
 ### Current Agents
-
-1. **WordPress Content Manager** - Manages WordPress content creation
-2. **WordPress Blog Manager** - Handles blog posts and articles
+1. **WordPress Content Manager** - Manages WordPress content creation and publishing
+2. **Blog & Posts Manager** - Handles blog post creation and management
 3. **Podcast Manager** - Manages podcast content and distribution
-4. **Social Media Manager** - Handles social media automation
+4. **Social Media Manager** - Handles social media posting and engagement
 
 ### Agent Features
-
 - Real-time status monitoring
-- Task queue management
+- Task management and tracking
 - Performance analytics
-- Error handling and recovery
 - MCP Hub integration
+- Automated workflows
 
 ## 📊 Dashboard Sections
 
 ### Overview
 - System metrics and performance
-- Quick actions for common tasks
-- Recent activity feed
+- Quick actions and shortcuts
+- Real-time status updates
 
 ### AI Agents
-- Agent status and controls
+- Agent cards with status indicators
+- Action buttons (Start/Stop/Restart)
 - Performance metrics
-- Configuration options
+- Capabilities and suggestions
 
 ### Tasks
-- Task queue and progress
-- Priority management
-- Completion tracking
+- Task list with status tracking
+- Priority levels and deadlines
+- Progress indicators
+
+### Agent Requests
+- Request new custom agents
+- Multi-step form process
+- Status tracking and updates
 
 ### Analytics
-- Performance charts
-- Success rate tracking
+- Performance metrics
+- Success rates
 - Usage statistics
-
-### Requests
-- New agent requests
-- Processing status
-- Approval workflow
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Automatic Deployment
+The application is configured for automatic deployment:
 
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables
-3. Deploy automatically on push
+1. **Push to GitHub** → Automatic Vercel deployment
+2. **Pull Request** → Preview deployment
+3. **Main branch** → Production deployment
 
 ### Manual Deployment
-
 ```bash
-# Build for production
-npm run build
+# Deploy to production
+npx vercel --prod
 
-# Start production server
-npm start
+# Deploy to preview
+npx vercel
+
+# View deployment status
+npx vercel ls
 ```
-
-## 🔧 Configuration
-
-### MCP Hub Integration
-
-The app connects to the MCP Hub for agent management:
-
-- **URL:** http://173.254.201.134:4000
-- **Protocol:** HTTP/HTTPS
-- **Authentication:** API key based
-
-### WordPress Integration
-
-WordPress agents require:
-
-- WordPress REST API access
-- Application passwords
-- Proper permissions
 
 ## 📱 Mobile Support
 
-- Responsive design
+- Responsive design for all screen sizes
 - Touch-friendly interface
 - Mobile-optimized navigation
 - Progressive Web App features
 
 ## 🔒 Security
 
+- HTTPS enabled
+- Security headers configured
 - Environment variable protection
-- API key management
-- Secure communication with MCP Hub
 - Input validation and sanitization
 
-## 🐛 Troubleshooting
+## 🚨 Troubleshooting
 
 ### Common Issues
 
-1. **MCP Hub Connection Failed**
-   - Check MCP Hub URL
-   - Verify network connectivity
-   - Check firewall settings
+1. **Build Failures**
+   ```bash
+   npm run build
+   npx vercel logs
+   ```
 
-2. **WordPress Agent Issues**
-   - Verify WordPress credentials
-   - Check API permissions
-   - Validate site URL
+2. **Local Development**
+   ```bash
+   npm run dev
+   npm run build
+   npm run start
+   ```
 
-3. **Build Errors**
-   - Clear `.next` directory
-   - Reinstall dependencies
-   - Check Node.js version
-
-## 📈 Performance
-
-- Optimized bundle size
-- Lazy loading components
-- Efficient state management
-- Caching strategies
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is proprietary to Tax4US.
+3. **Deployment Issues**
+   ```bash
+   npx vercel ls
+   npx vercel logs
+   ```
 
 ## 📞 Support
 
-For support and questions:
-- Email: ben@tax4us.co.il
-- Technical issues: Check the troubleshooting section
+- **GitHub Issues:** https://github.com/imsuperseller/tax4us-agent-system/issues
+- **Vercel Dashboard:** https://vercel.com/shais-projects-f9b9e359/production-app
+- **Documentation:** See DEPLOYMENT.md for detailed deployment guide
+
+## 📄 License
+
+This project is proprietary software for Tax4US.
 
 ---
 
-**Built with ❤️ for Tax4US Business Automation**
+**🎉 Tax4US Agent Management System - Production Ready!**
