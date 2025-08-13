@@ -31,7 +31,7 @@ function MetricCard({ title, value, change, changeType = 'neutral', icon, color 
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        "relative p-6 rounded-xl border bg-white/80 backdrop-blur-sm",
+        "relative p-4 rounded-xl border bg-white/80 backdrop-blur-sm",
         "shadow-sm hover:shadow-md transition-all duration-300"
       )}
       style={{
@@ -39,7 +39,7 @@ function MetricCard({ title, value, change, changeType = 'neutral', icon, color 
         border: '1px solid rgba(226, 232, 240, 0.8)'
       }}
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div className={cn(
           "p-2 rounded-lg",
           colorClasses[color as keyof typeof colorClasses]
@@ -63,7 +63,7 @@ function MetricCard({ title, value, change, changeType = 'neutral', icon, color 
 
       {/* Animated progress bar */}
       <motion.div
-        className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden"
+        className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden"
         initial={{ width: 0 }}
         animate={{ width: '100%' }}
         transition={{ duration: 1, delay: 0.2 }}
@@ -130,7 +130,7 @@ export function MetricsDashboard({ metrics }: MetricsDashboardProps) {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">System Metrics</h2>
         <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -139,7 +139,7 @@ export function MetricsDashboard({ metrics }: MetricsDashboardProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {cards.map((card, index) => (
           <motion.div
             key={card.title}
@@ -152,18 +152,18 @@ export function MetricsDashboard({ metrics }: MetricsDashboardProps) {
         ))}
       </div>
 
-      {/* Performance Chart Placeholder */}
+      {/* Performance Chart Placeholder - Compact Version */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.4 }}
-        className="p-6 rounded-xl border bg-white/80 backdrop-blur-sm shadow-sm"
+        className="p-4 rounded-xl border bg-white/80 backdrop-blur-sm shadow-sm"
         style={{
           background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.8) 100%)',
           border: '1px solid rgba(226, 232, 240, 0.8)'
         }}
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3">
           <h3 className="text-lg font-semibold text-gray-900">Performance Overview</h3>
           <div className="flex items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
@@ -177,11 +177,11 @@ export function MetricsDashboard({ metrics }: MetricsDashboardProps) {
           </div>
         </div>
         
-        <div className="h-32 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-gray-100 flex items-center justify-center">
+        <div className="h-20 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-gray-100 flex items-center justify-center">
           <div className="text-center text-gray-500">
-            <div className="text-2xl mb-2">📊</div>
-            <div className="text-sm">Chart integration coming soon</div>
-            <div className="text-xs">Powered by Recharts + MCP data</div>
+            <div className="text-lg mb-1">📊</div>
+            <div className="text-xs">Chart integration coming soon</div>
+            <div className="text-xs opacity-75">Powered by Recharts + MCP data</div>
           </div>
         </div>
       </motion.div>

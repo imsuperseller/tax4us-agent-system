@@ -387,530 +387,227 @@ export default function Tax4USDashboard() {
       />
 
       {/* Main Content */}
-      <main className="p-6">
-        {activeTab === 'overview' && (
-          <div className="space-y-8">
-            {/* Hero Section */}
-            <div className="text-center space-y-4">
-              <div 
-                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1))',
-                  borderColor: 'rgba(16, 185, 129, 0.2)'
-                }}
-              >
-                <Sparkles className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-600">AI-Powered Automation</span>
-              </div>
-              <h2 
-                className="text-3xl font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}
-              >
-                {t('welcome', 'dashboard')}
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {t('description', 'dashboard')}
-              </p>
-            </div>
-
-            {/* Metrics Dashboard */}
-            <MetricsDashboard 
-              metrics={{
-                totalAgents: agents.length,
-                activeAgents: agents.filter(a => a.status === 'active').length,
-                totalTasks: tasks.length,
-                completedTasks: tasks.filter(t => t.status === 'completed').length,
-                successRate: 94,
-                averageResponseTime: '2.3s'
-              }}
-            />
-
-            {/* Quick Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div 
-                className="p-6 rounded-2xl border"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderColor: 'rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold">{t('quickActions', 'dashboard')}</h3>
-                  <Rocket className="h-6 w-6 text-blue-600" />
-                </div>
-                <div className="space-y-4">
-                  <button 
-                    className="w-full flex items-center justify-between p-4 rounded-xl border transition-all group hover:transform hover:scale-105"
-                    style={{
-                      borderColor: 'rgba(255, 255, 255, 0.2)',
-                      background: 'rgba(255, 255, 255, 0.1)'
-                    }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 group-hover:scale-110 transition-transform">
-                        <Plus className="h-5 w-5 text-white" />
-                      </div>
-                      <span className="font-medium">{t('requestNewAgent', 'dashboard')}</span>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
-                  </button>
-                  <button 
-                    className="w-full flex items-center justify-between p-4 rounded-xl border transition-all group hover:transform hover:scale-105"
-                    style={{
-                      borderColor: 'rgba(255, 255, 255, 0.2)',
-                      background: 'rgba(255, 255, 255, 0.1)'
-                    }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 group-hover:scale-110 transition-transform">
-                        <BarChart className="h-5 w-5 text-white" />
-                      </div>
-                      <span className="font-medium">{t('viewAnalytics', 'dashboard')}</span>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
-                  </button>
-                  <button 
-                    className="w-full flex items-center justify-between p-4 rounded-xl border transition-all group hover:transform hover:scale-105"
-                    style={{
-                      borderColor: 'rgba(255, 255, 255, 0.2)',
-                      background: 'rgba(255, 255, 255, 0.1)'
-                    }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-violet-600 group-hover:scale-110 transition-transform">
-                        <Settings className="h-5 w-5 text-white" />
-                      </div>
-                      <span className="font-medium">{t('configureAgents', 'dashboard')}</span>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
-                  </button>
-                </div>
-              </div>
-
-              <div 
-                className="p-6 rounded-2xl border"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderColor: 'rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold">פעילות אחרונה</h3>
-                  <Clock className="h-6 w-6 text-blue-600" />
-                </div>
-                <div className="space-y-4">
-                  {tasks.slice(0, 3).map((task) => {
-                    const agent = agents.find(a => a.id === task.agentId)
-                    return (
-                      <div 
-                        key={task.id} 
-                        className="flex items-center space-x-3 p-3 rounded-xl"
-                        style={{ background: 'rgba(255, 255, 255, 0.5)' }}
-                      >
-                        <div className={cn("p-2 rounded-lg", getStatusColor(task.status))}>
-                          {getStatusIcon(task.status)}
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium">{task.title}</p>
-                          <p className="text-xs text-gray-500">
-                            {agent?.name} • {formatDate(task.createdAt)}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-sm font-medium">{task.progress}%</div>
-                          <div className="w-16 h-1 bg-gray-200 rounded-full">
-                            <div 
-                              className="h-1 rounded-full transition-all"
-                              style={{ 
-                                width: `${task.progress}%`,
-                                background: 'linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6)'
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Agent Status Overview */}
+      <main className="flex-1 p-6">
+        <div className="max-w-7xl mx-auto space-y-4">
+          {/* Welcome Section */}
+          <div className="text-center py-4">
             <div 
-              className="p-6 rounded-2xl border"
+              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-4"
+              style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1))',
+                border: '1px solid rgba(16, 185, 129, 0.2)'
+              }}
+            >
+              <Sparkles className="h-4 w-4 text-green-600" />
+              <span className="text-sm font-medium text-green-600">AI-Powered Automation</span>
+            </div>
+            <h2 
+              className="text-3xl font-bold mb-2"
+              style={{
+                background: 'linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
+              {t('welcome', 'dashboard')}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {t('description', 'dashboard')}
+            </p>
+          </div>
+
+          {/* Metrics Dashboard */}
+          <MetricsDashboard 
+            metrics={{
+              totalAgents: agents.length,
+              activeAgents: agents.filter(a => a.status === 'active').length,
+              totalTasks: tasks.length,
+              completedTasks: tasks.filter(t => t.status === 'completed').length,
+              successRate: 94,
+              averageResponseTime: '2.3s'
+            }}
+          />
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div 
+              className="p-5 rounded-2xl border"
               style={{
                 background: 'rgba(255, 255, 255, 0.8)',
                 backdropFilter: 'blur(10px)',
                 borderColor: 'rgba(255, 255, 255, 0.2)'
               }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold">Agent Status Overview</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-semibold">{t('quickActions', 'dashboard')}</h3>
+                <Rocket className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="space-y-3">
                 <button 
-                  onClick={() => setShowRequestModal(true)}
-                  className="flex items-center space-x-2 px-4 py-2 rounded-xl text-white font-medium transition-all hover:transform hover:scale-105"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border transition-all group hover:transform hover:scale-105"
                   style={{
-                    background: 'linear-gradient(135deg, #10b981, #3b82f6)',
-                    boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.3)'
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.1)'
                   }}
                 >
-                  <Plus className="h-4 w-4" />
-                  <span>Request New Agent</span>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 group-hover:scale-110 transition-transform">
+                      <Plus className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="font-medium">{t('requestNewAgent', 'dashboard')}</span>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                </button>
+                <button 
+                  className="w-full flex items-center justify-between p-3 rounded-xl border transition-all group hover:transform hover:scale-105"
+                  style={{
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 group-hover:scale-110 transition-transform">
+                      <BarChart className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="font-medium">{t('viewAnalytics', 'dashboard')}</span>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                </button>
+                <button 
+                  className="w-full flex items-center justify-between p-3 rounded-xl border transition-all group hover:transform hover:scale-105"
+                  style={{
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-violet-600 group-hover:scale-110 transition-transform">
+                      <Settings className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="font-medium">{t('configureAgents', 'dashboard')}</span>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {agents.map((agent, index) => (
-                  <div 
-                    key={agent.id} 
-                    className="p-4 rounded-xl transition-all duration-300 hover:transform hover:scale-105"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.6)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      animationDelay: `${index * 100}ms`,
-                      animation: 'fadeInUp 0.6s ease-out forwards'
-                    }}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center space-x-3">
-                        <div className={cn("p-2 rounded-lg", getStatusColor(agent.status))}>
-                          {agent.icon}
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">{agent.name}</h4>
-                          <span className={cn("text-xs px-2 py-1 rounded-full", getStatusColor(agent.status))}>
-                            {agent.status}
-                          </span>
+            </div>
+
+            <div 
+              className="p-5 rounded-2xl border"
+              style={{
+                background: 'rgba(255, 255, 255, 0.8)',
+                backdropFilter: 'blur(10px)',
+                borderColor: 'rgba(255, 255, 255, 0.2)'
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-semibold">פעילות אחרונה</h3>
+                <Clock className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="space-y-3">
+                {tasks.slice(0, 3).map((task) => {
+                  const agent = agents.find(a => a.id === task.agentId)
+                  return (
+                    <div 
+                      key={task.id} 
+                      className="flex items-center space-x-3 p-3 rounded-xl"
+                      style={{ background: 'rgba(255, 255, 255, 0.5)' }}
+                    >
+                      <div className={cn("p-2 rounded-lg", getStatusColor(task.status))}>
+                        {getStatusIcon(task.status)}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{task.title}</p>
+                        <p className="text-xs text-gray-500">
+                          {agent?.name} • {formatDate(task.createdAt)}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium">{task.progress}%</div>
+                        <div className="w-16 h-1 bg-gray-200 rounded-full">
+                          <div 
+                            className="h-1 rounded-full transition-all"
+                            style={{ 
+                              width: `${task.progress}%`,
+                              background: 'linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6)'
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mb-3">{agent.description}</p>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>{agent.metrics.tasksCompleted} tasks</span>
-                      <span className="text-green-600 font-medium">{agent.metrics.successRate}% success</span>
-                    </div>
-                    {agent.metrics.currentTask && (
-                      <div className="mt-2 text-xs text-gray-500">
-                        Current: {agent.metrics.currentTask}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>
-        )}
 
-        {activeTab === 'agents' && (
-          <div className="space-y-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-3xl font-bold text-gradient">{t('title', 'agents')}</h2>
-                                  <p className="text-muted-foreground">{t('subtitle', 'agents')}</p>
-              </div>
+          {/* Agent Status Overview */}
+          <div 
+            className="p-5 rounded-2xl border"
+            style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderColor: 'rgba(255, 255, 255, 0.2)'
+            }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold">Agent Status Overview</h3>
               <button 
                 onClick={() => setShowRequestModal(true)}
-                className="btn-primary flex items-center space-x-2 px-6 py-3 rounded-xl text-white font-medium"
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl text-white font-medium transition-all hover:transform hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, #10b981, #3b82f6)',
+                  boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.3)'
+                }}
               >
                 <Plus className="h-4 w-4" />
                 <span>Request New Agent</span>
               </button>
             </div>
-
-            {agents.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {agents.map((agent, index) => (
-                  <AgentCard
-                    key={agent.id}
-                    agent={agent}
-                    onAction={handleAgentAction}
-                    isProcessing={false}
-                  />
-                ))}
-              </div>
-            ) : (
-              <AgentsEmptyState onRequestAgent={() => setShowRequestModal(true)} />
-            )}
-          </div>
-        )}
-
-        {activeTab === 'tasks' && (
-          <div className="space-y-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-3xl font-bold text-gradient">Tasks</h2>
-                <p className="text-muted-foreground">Monitor and manage your workflow</p>
-              </div>
-              <button className="btn-primary flex items-center space-x-2 px-6 py-3 rounded-xl text-white font-medium">
-                <Plus className="h-4 w-4" />
-                <span>Create Task</span>
-              </button>
-            </div>
-
-            <div className="glass rounded-2xl border border-white/20 overflow-hidden">
-              <div className="p-6">
-                <div className="flex items-center space-x-4 mb-6">
-                  <button className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium">All</button>
-                  <button className="px-4 py-2 rounded-lg bg-muted text-muted-foreground text-sm hover:bg-accent/50 transition-colors">Pending</button>
-                  <button className="px-4 py-2 rounded-lg bg-muted text-muted-foreground text-sm hover:bg-accent/50 transition-colors">Processing</button>
-                  <button className="px-4 py-2 rounded-lg bg-muted text-muted-foreground text-sm hover:bg-accent/50 transition-colors">Completed</button>
-                </div>
-
-                {tasks.length > 0 ? (
-                  <div className="space-y-4">
-                    {tasks.map((task, index) => {
-                      const agent = agents.find(a => a.id === task.agentId)
-                      return (
-                        <div 
-                          key={task.id} 
-                          className="flex items-center justify-between p-4 rounded-xl border border-white/20 hover:bg-accent/50 transition-all animate-fade-in"
-                          style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className={cn("p-3 rounded-xl", getStatusColor(task.status))}>
-                              {getStatusIcon(task.status)}
-                            </div>
-                            <div>
-                              <h4 className="font-semibold">{task.title}</h4>
-                              <p className="text-sm text-muted-foreground">{task.description}</p>
-                              <div className="flex items-center space-x-4 mt-1">
-                                <span className="text-xs text-muted-foreground">
-                                  Agent: {agent?.name}
-                                </span>
-                                <span className="text-xs text-muted-foreground">
-                                  Created: {formatDate(task.createdAt)}
-                                </span>
-                                {task.estimatedTime && (
-                                  <span className="text-xs text-muted-foreground">
-                                    Est: {task.estimatedTime}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-4">
-                            <div className="text-right">
-                              <div className="text-sm font-semibold">{task.progress}%</div>
-                              <div className="w-24 h-2 bg-muted rounded-full">
-                                <div 
-                                  className="h-2 progress-gradient rounded-full transition-all"
-                                  style={{ width: `${task.progress}%` }}
-                                />
-                              </div>
-                            </div>
-                            <span className={cn(
-                              "text-xs px-3 py-1 rounded-full font-medium",
-                              task.priority === 'high' ? 'bg-red-100 text-red-800' :
-                              task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-green-100 text-green-800'
-                            )}>
-                              {task.priority}
-                            </span>
-                            <button className="text-sm text-primary hover:underline font-medium">
-                              View
-                            </button>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                ) : (
-                  <TasksEmptyState onViewAgents={() => setActiveTab('agents')} />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'requests' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Agent Requests</h2>
-              <button 
-                onClick={() => setShowRequestModal(true)}
-                className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-              >
-                <Plus className="h-4 w-4" />
-                <span>New Request</span>
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {agentRequests.map((request) => (
-                <div key={request.id} className="bg-card p-6 rounded-lg border">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold">Agent Request #{request.id}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {request.businessNeeds.substring(0, 100)}...
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <span className={cn(
-                        "text-xs px-2 py-1 rounded-full",
-                        request.status === 'completed' ? 'bg-green-100 text-green-800' :
-                        request.status === 'processing' ? 'bg-blue-100 text-blue-800' :
-                        request.status === 'ready-signature' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-gray-100 text-gray-800'
-                      )}>
-                        {request.status.replace('-', ' ')}
-                      </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {agents.map((agent, index) => (
+                <div 
+                  key={agent.id} 
+                  className="p-4 rounded-xl transition-all duration-300 hover:transform hover:scale-105"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    animationDelay: `${index * 100}ms`,
+                    animation: 'fadeInUp 0.6s ease-out forwards'
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className={cn("p-2 rounded-lg", getStatusColor(agent.status))}>
+                        {agent.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold">{agent.name}</h4>
+                        <span className={cn("text-xs px-2 py-1 rounded-full", getStatusColor(agent.status))}>
+                          {agent.status}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <p className="text-sm font-medium">Industry</p>
-                      <p className="text-sm text-muted-foreground">{request.industry}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">Contact</p>
-                      <p className="text-sm text-muted-foreground">{request.contactEmail}</p>
-                    </div>
+                  <p className="text-sm text-gray-600 mb-3">{agent.description}</p>
+                  <div className="flex items-center justify-between text-sm">
+                    <span>{agent.metrics.tasksCompleted} tasks</span>
+                    <span className="text-green-600 font-medium">{agent.metrics.successRate}% success</span>
                   </div>
-
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between text-sm mb-2">
-                      <span>Progress</span>
-                      <span>{request.progress}%</span>
+                  {agent.metrics.currentTask && (
+                    <div className="mt-2 text-xs text-gray-500">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-3 w-3" />
+                        <span>{agent.metrics.currentTask}</span>
+                      </div>
                     </div>
-                    <div className="w-full h-2 bg-muted rounded-full">
-                      <div 
-                        className="h-2 bg-primary rounded-full transition-all"
-                        style={{ width: `${request.progress}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>Created: {formatDate(request.createdAt)}</span>
-                    <span>Updated: {formatDate(request.updatedAt)}</span>
-                  </div>
+                  )}
                 </div>
               ))}
-
-              {agentRequests.length === 0 && (
-                <EmptyState
-                  icon={<span className="text-3xl">📝</span>}
-                  title={t('noRequests', 'requests')}
-                  description={t('noRequestsDescription', 'requests')}
-                  actionLabel={t('makeRequest', 'requests')}
-                  onAction={() => setShowRequestModal(true)}
-                />
-              )}
             </div>
           </div>
-        )}
-
-        {activeTab === 'analytics' && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Analytics</h2>
-            {agents.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-6 rounded-lg border">
-                  <h3 className="text-lg font-semibold mb-4">Agent Performance</h3>
-                  <div className="space-y-4">
-                    {agents.map((agent) => (
-                      <div key={agent.id} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className={cn("p-2 rounded-lg", getStatusColor(agent.status))}>
-                            {agent.icon}
-                          </div>
-                          <span className="font-medium">{agent.name}</span>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold">{agent.metrics.successRate}%</p>
-                          <p className="text-sm text-muted-foreground">{agent.metrics.tasksCompleted} tasks</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              <div className="bg-card p-6 rounded-lg border">
-                <h3 className="text-lg font-semibold mb-4">Task Distribution</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span>WordPress Content</span>
-                    <span className="font-semibold">156 tasks</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>WordPress Blog</span>
-                    <span className="font-semibold">89 tasks</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Podcast Manager</span>
-                    <span className="font-semibold">67 tasks</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Social Media</span>
-                    <span className="font-semibold">234 tasks</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <AnalyticsEmptyState onViewAgents={() => setActiveTab('agents')} />
-          )}
-          </div>
-        )}
-
-        {activeTab === 'settings' && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Settings</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-card p-6 rounded-lg border">
-                <h3 className="text-lg font-semibold mb-4">Agent Configuration</h3>
-                <div className="space-y-4">
-                  {agents.map((agent) => (
-                    <div key={agent.id} className="flex items-center justify-between p-3 rounded-lg border">
-                      <div className="flex items-center space-x-3">
-                        <div className={cn("p-2 rounded-lg", getStatusColor(agent.status))}>
-                          {agent.icon}
-                        </div>
-                        <span>{agent.name}</span>
-                      </div>
-                      <button className="text-sm text-primary hover:underline">
-                        Configure
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-card p-6 rounded-lg border">
-                <h3 className="text-lg font-semibold mb-4">System Preferences</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span>Auto-refresh dashboard</span>
-                    <button className="w-12 h-6 bg-primary rounded-full relative">
-                      <div className="w-4 h-4 bg-white rounded-full absolute top-1 right-1"></div>
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Email notifications</span>
-                    <button className="w-12 h-6 bg-primary rounded-full relative">
-                      <div className="w-4 h-4 bg-white rounded-full absolute top-1 right-1"></div>
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Real-time updates</span>
-                    <button className="w-12 h-6 bg-primary rounded-full relative">
-                      <div className="w-4 h-4 bg-white rounded-full absolute top-1 right-1"></div>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </main>
 
       {/* Modals */}
