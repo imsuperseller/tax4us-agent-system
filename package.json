@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "shadcn": "npx shadcn@latest"
+    "type-check": "tsc --noEmit",
+    "shadcn": "npx shadcn@latest",
+    "test": "echo \"No tests specified\" && exit 0",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",

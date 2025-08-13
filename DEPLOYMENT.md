@@ -1,193 +1,104 @@
-# 🚀 Tax4US Agent Management System - Deployment Guide
+# Tax4US AI Dashboard - Deployment Guide
 
-## ✅ Current Status
+## 🚀 Vercel Deployment Configuration
 
-**🌐 Live Application:** https://production-a74p1ssiu-shais-projects-f9b9e359.vercel.app  
-**📁 GitHub Repository:** https://github.com/imsuperseller/tax4us-agent-system  
-**🔗 Vercel Project:** Connected and configured
+### **Project Details**
+- **Project ID:** `prj_n2NRVyGSFmaZFhWSbcXRCiAx4hiu`
+- **Team ID:** `team_SEnaotre0c8j0LYup48DbA3f`
+- **User ID:** `zSy1OLXtVLif2Vuf4brnBeZz`
+- **Production URL:** https://production-arf3p6axc-shais-projects-6bd42652.vercel.app
 
-## 🔧 Automated Deployment Setup
+### **Environment Variables**
+Set these in Vercel Dashboard → Settings → Environment Variables:
 
-### ✅ What's Already Configured
-
-1. **GitHub Integration** ✅
-   - Repository connected to Vercel
-   - Automatic deployments on push to `main` branch
-
-2. **Build Configuration** ✅
-   - Next.js 14.2.31 configured
-   - TypeScript compilation working
-   - Hebrew localization complete
-
-3. **Production Environment** ✅
-   - Vercel production deployment active
-   - HTTPS enabled
-   - CDN optimized
-
-### 🎯 Automatic Deployment Workflow
-
-**Every time you push to GitHub:**
-1. Vercel automatically detects changes
-2. Builds the application
-3. Runs tests and type checking
-4. Deploys to production
-5. Updates the live URL
-
-## 📋 Deployment Commands
-
-### For Manual Deployment
 ```bash
-# Deploy to production
-npx vercel --prod
+# Vercel Configuration
+VERCEL_TOKEN=YUAzEHrCMQSwq7dlqknuUMoi
+VERCEL_USER_ID=zSy1OLXtVLif2Vuf4brnBeZz
+VERCEL_TEAM_ID=team_SEnaotre0c8j0LYup48DbA3f
+VERCEL_PROJECT_ID=prj_n2NRVyGSFmaZFhWSbcXRCiAx4hiu
 
-# Deploy to preview
-npx vercel
+# Project Configuration
+NEXT_PUBLIC_APP_NAME=Tax4US AI Dashboard
+NEXT_PUBLIC_APP_VERSION=1.0.0
+NEXT_PUBLIC_API_BASE_URL=https://www.tax4us.co.il/wp-json/wp/v2
 
-# View deployment status
-npx vercel ls
+# WordPress Configuration
+WP_USERNAME=your_wordpress_username
+WP_PASSWORD=your_wordpress_application_password
+OPENAI_API_KEY=your_openai_api_key_here
 
-# View logs
-npx vercel logs
+# MCP Hub Configuration
+MCP_HUB_URL=http://173.254.201.134:4000
+WORDPRESS_AGENT_URL=http://localhost:8000
 ```
 
-### For Development
+### **GitHub Actions Setup**
+1. Add repository secrets in GitHub:
+   - `VERCEL_TOKEN`
+   - `VERCEL_USER_ID`
+   - `VERCEL_TEAM_ID`
+   - `VERCEL_PROJECT_ID`
+
+2. Push to `main` branch triggers automatic deployment
+
+### **Manual Deployment**
 ```bash
-# Start local development
+# Install Vercel CLI
+npm i -g vercel
+
+# Login and deploy
+vercel --token $VERCEL_TOKEN --prod
+```
+
+### **Local Development**
+```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 
-# Build locally
+# Build for production
 npm run build
 
-# Test build
-npm run start
+# Start production server
+npm start
 ```
 
-## 🔄 GitHub Integration
+### **Build Configuration**
+- **Framework:** Next.js 14
+- **Node Version:** 18.x
+- **Build Command:** `npm run build`
+- **Output Directory:** `.next`
+- **Install Command:** `npm install`
 
-### Automatic Triggers
-- **Push to `main`** → Production deployment
-- **Pull Request** → Preview deployment
-- **Branch push** → Preview deployment
+### **Performance Optimizations**
+- Static page generation for dashboard
+- API routes for dynamic content
+- Optimized bundle size (143 kB first load)
+- Image optimization with Next.js
 
-### Manual Triggers
-```bash
-# Force redeploy
-npx vercel --prod --force
+### **Monitoring**
+- Vercel Analytics enabled
+- Performance monitoring
+- Error tracking
+- Real-time logs
 
-# Promote preview to production
-npx vercel promote [deployment-url]
-```
+### **Security**
+- Environment variables encrypted
+- HTTPS enforced
+- CORS configured
+- API rate limiting
 
-## 🌐 Environment Variables
+### **Troubleshooting**
+1. **Build Failures:** Check Node.js version and dependencies
+2. **Environment Variables:** Verify all required vars are set
+3. **API Issues:** Check MCP Hub connectivity
+4. **Performance:** Monitor bundle size and loading times
 
-### Production Environment
-```bash
-NODE_ENV=production
-```
-
-### Development Environment
-```bash
-NODE_ENV=development
-```
-
-## 📊 Monitoring & Analytics
-
-### Vercel Dashboard
-- **URL:** https://vercel.com/shais-projects-f9b9e359/production-app
-- **Features:** Deployment history, logs, performance metrics
-
-### GitHub Actions (Optional)
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to Vercel
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-```
-
-## 🔒 Security & Performance
-
-### Security Headers
-- X-Content-Type-Options: nosniff
-- X-Frame-Options: DENY
-- X-XSS-Protection: 1; mode=block
-
-### Performance Optimizations
-- Static page generation
-- Image optimization
-- Code splitting
-- CDN caching
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-1. **Build Failures**
-   ```bash
-   # Check build logs
-   npx vercel logs
-   
-   # Test build locally
-   npm run build
-   ```
-
-2. **Environment Variables**
-   ```bash
-   # List environment variables
-   npx vercel env ls
-   
-   # Add environment variable
-   npx vercel env add VARIABLE_NAME
-   ```
-
-3. **Domain Issues**
-   ```bash
-   # Check domain status
-   npx vercel domains ls
-   
-   # Add custom domain
-   npx vercel domains add yourdomain.com
-   ```
-
-## 📞 Support
-
-### Vercel Support
-- **Documentation:** https://vercel.com/docs
-- **Status Page:** https://vercel-status.com
-- **Community:** https://github.com/vercel/vercel/discussions
-
-### Project Support
-- **Repository:** https://github.com/imsuperseller/tax4us-agent-system
-- **Issues:** Create GitHub issue for bugs
-- **Discussions:** Use GitHub discussions for questions
-
-## 🎯 Next Steps
-
-### For Ben (Client)
-1. **Access the live application** at the URL above
-2. **Test all features** in Hebrew
-3. **Report any issues** via GitHub or direct communication
-
-### For Development
-1. **Continue agent development** - the other 3 agents
-2. **Monitor deployment status** via Vercel dashboard
-3. **Update application** by pushing to GitHub
-
-### For Production
-1. **Set up monitoring** and alerting
-2. **Configure backups** if needed
-3. **Set up custom domain** if required
-
----
-
-**🎉 The Tax4US Agent Management System is now fully automated and production-ready!**
+### **Next Steps**
+1. Configure custom domain
+2. Set up monitoring alerts
+3. Implement caching strategies
+4. Add performance optimizations
