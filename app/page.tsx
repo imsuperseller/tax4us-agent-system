@@ -129,15 +129,16 @@ export default function Tax4USDashboard() {
   useEffect(() => {
     const loadAgents = async () => {
       try {
-        // Load WordPress Content Manager from real MCP Hub
-        const response = await fetch('/api/agents/wordpress-content')
+        // Load all agents from enhanced MCP Hub integration
+        const response = await fetch('/api/agents/mcp-hub')
         const data = await response.json()
         
         if (data.success) {
-          setAgents([data.agent])
+          setAgents(data.agents)
+          console.log('✅ Loaded agents from MCP Hub:', data.agents.length)
         } else {
-          console.warn('Using fallback data:', data.message)
-          setAgents([data.agent]) // Use fallback data
+          console.warn('Using enhanced fallback data:', data.message)
+          setAgents(data.agents) // Use enhanced fallback data
         }
       } catch (error) {
         console.error('Failed to load agents:', error)
@@ -254,14 +255,15 @@ export default function Tax4USDashboard() {
     console.log(`${action} agent ${agentId}`)
     
     try {
-      // Send action to real MCP Hub
-      const response = await fetch('/api/agents/wordpress-content', {
+      // Send action to enhanced MCP Hub
+      const response = await fetch('/api/agents/mcp-hub', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           action,
+          agentId,
           data: { agentId }
         })
       })
@@ -279,8 +281,19 @@ export default function Tax4USDashboard() {
           }
           return agent
         }))
+        console.log(`✅ Agent ${agentId} ${action} successful`)
       } else {
         console.error('Agent action failed:', result.message)
+        // Fallback to local state update
+        setAgents(prev => prev.map(agent => {
+          if (agent.id === agentId) {
+            return {
+              ...agent,
+              status: action === 'start' ? 'active' : action === 'stop' ? 'inactive' : 'processing'
+            }
+          }
+          return agent
+        }))
       }
     } catch (error) {
       console.error('Failed to execute agent action:', error)
