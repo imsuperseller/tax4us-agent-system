@@ -49,6 +49,9 @@ export const hebrewTranslations = {
     noAgents: 'אין עדיין סוכנים',
     noAgentsDescription: 'התחל על ידי בקשת הסוכן החכם הראשון שלך',
     requestAgent: 'בקש סוכן',
+    capabilities: 'יכולות',
+    suggestions: 'הצעות',
+    mcpConnected: 'MCP מחובר',
     agentTypes: {
       wordpressContent: 'מנהל תוכן וורדפרס',
       blogPosts: 'מנהל בלוג ופוסטים',
@@ -76,10 +79,7 @@ export const hebrewTranslations = {
       lastActivity: 'פעילות אחרונה',
       currentTask: 'משימה נוכחית',
       queueLength: 'אורך תור'
-    },
-    capabilities: 'יכולות',
-    suggestions: 'הצעות',
-    mcpConnected: 'MCP מחובר'
+    }
   },
 
   // Tasks
@@ -97,9 +97,9 @@ export const hebrewTranslations = {
       paused: 'מושהה'
     },
     priority: {
-      low: 'נמוך',
-      medium: 'בינוני',
-      high: 'גבוה'
+      low: 'עדיפות נמוכה',
+      medium: 'עדיפות בינונית',
+      high: 'עדיפות גבוהה'
     },
     fields: {
       title: 'כותרת',
@@ -107,7 +107,8 @@ export const hebrewTranslations = {
       agent: 'סוכן',
       created: 'נוצר',
       estimated: 'מוערך',
-      progress: 'התקדמות'
+      progress: 'התקדמות',
+      currentTask: 'משימה נוכחית'
     }
   },
 
@@ -132,7 +133,9 @@ export const hebrewTranslations = {
       contactEmail: 'אימייל ליצירת קשר',
       budget: 'תקציב',
       timeline: 'לוח זמנים',
-      priority: 'עדיפות'
+      priority: 'עדיפות',
+      description: 'תיאור',
+      requirements: 'דרישות'
     },
     form: {
       title: 'בקש סוכן חדש',
@@ -143,7 +146,11 @@ export const hebrewTranslations = {
       next: 'הבא',
       previous: 'קודם',
       submit: 'שלח בקשה',
-      submitting: 'שולח...'
+      submitting: 'שולח...',
+      descriptionPlaceholder: 'תאר את המשימות הספציפיות, המטרות והדרישות עבור הסוכן החכם שלך...',
+      requirementsPlaceholder: 'דרישות טכניות, אינטגרציות, צרכי אבטחה וכו...',
+      budgetPlaceholder: 'למשל: $1000-2500',
+      timelinePlaceholder: 'למשל: 2-4 שבועות'
     }
   },
 
@@ -188,7 +195,12 @@ export const hebrewTranslations = {
     thisWeek: 'השבוע',
     thisMonth: 'החודש',
     lastWeek: 'שבוע שעבר',
-    lastMonth: 'חודש שעבר'
+    lastMonth: 'חודש שעבר',
+    step: 'שלב',
+    of: 'מתוך',
+    complete: 'הושלם',
+    more: 'עוד',
+    processing: 'מעבד'
   }
 }
 

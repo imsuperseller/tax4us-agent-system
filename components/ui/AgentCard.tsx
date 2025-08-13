@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { cn, getStatusColor, getStatusIcon } from '@/lib/utils'
+import { t } from '@/lib/i18n'
 
 interface AgentCardProps {
   agent: {
@@ -49,7 +50,7 @@ export function AgentCard({ agent, onAction, isProcessing = false }: AgentCardPr
           statusColor
         )}>
           <span className="text-lg">{statusIcon}</span>
-          <span className="capitalize">{agent.status}</span>
+          <span className="capitalize">{t(agent.status, 'agents')}</span>
         </div>
       </div>
 
@@ -72,11 +73,11 @@ export function AgentCard({ agent, onAction, isProcessing = false }: AgentCardPr
         <div className="grid grid-cols-2 gap-4">
           <div className="text-center p-3 rounded-lg bg-blue-50/50 border border-blue-100">
             <div className="text-2xl font-bold text-blue-600">{agent.metrics.tasksCompleted}</div>
-            <div className="text-xs text-gray-600">Tasks Completed</div>
+            <div className="text-xs text-gray-600">{t('tasksCompleted', 'agents')}</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-green-50/50 border border-green-100">
             <div className="text-2xl font-bold text-green-600">{agent.metrics.successRate}%</div>
-            <div className="text-xs text-gray-600">Success Rate</div>
+            <div className="text-xs text-gray-600">{t('successRate', 'agents')}</div>
           </div>
         </div>
       </div>
@@ -85,7 +86,7 @@ export function AgentCard({ agent, onAction, isProcessing = false }: AgentCardPr
       {agent.metrics.currentTask && (
         <div className="px-6 pb-4">
           <div className="bg-gray-50/50 rounded-lg p-3 border border-gray-100">
-            <div className="text-xs text-gray-500 mb-1">Current Task</div>
+            <div className="text-xs text-gray-500 mb-1">{t('currentTask', 'tasks')}</div>
             <div className="text-sm text-gray-700 font-medium">{agent.metrics.currentTask}</div>
           </div>
         </div>
@@ -93,70 +94,70 @@ export function AgentCard({ agent, onAction, isProcessing = false }: AgentCardPr
 
       {/* Capabilities */}
       <div className="px-6 pb-4">
-        <div className="text-xs text-gray-500 mb-2">Capabilities</div>
+        <div className="text-xs text-gray-500 mb-2">{t('capabilities', 'agents')}</div>
         <div className="flex flex-wrap gap-1">
           {agent.capabilities.slice(0, 3).map((capability, index) => (
             <span
               key={index}
-              className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full"
+              className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full"
             >
               {capability}
             </span>
           ))}
           {agent.capabilities.length > 3 && (
-            <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
-              +{agent.capabilities.length - 3} more
+            <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+              +{agent.capabilities.length - 3} {t('more', 'common')}
             </span>
           )}
         </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* Actions */}
       <div className="px-6 pb-6">
         <div className="flex gap-2">
           <button
             onClick={() => onAction(agent.id, 'start')}
             disabled={isProcessing || agent.status === 'active'}
             className={cn(
-              "flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-              "bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed",
-              "focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              "flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all",
+              agent.status === 'active'
+                ? "bg-green-100 text-green-700 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600 active:scale-95"
             )}
           >
-            {isProcessing ? 'Starting...' : 'Start'}
+            {t('start', 'agents')}
           </button>
           <button
             onClick={() => onAction(agent.id, 'stop')}
             disabled={isProcessing || agent.status === 'inactive'}
             className={cn(
-              "flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-              "bg-red-500 text-white hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed",
-              "focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              "flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all",
+              agent.status === 'inactive'
+                ? "bg-gray-100 text-gray-700 cursor-not-allowed"
+                : "bg-red-500 text-white hover:bg-red-600 active:scale-95"
             )}
           >
-            {isProcessing ? 'Stopping...' : 'Stop'}
+            {t('stop', 'agents')}
           </button>
           <button
             onClick={() => onAction(agent.id, 'restart')}
             disabled={isProcessing}
-            className={cn(
-              "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-              "bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            )}
+            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-600 active:scale-95 transition-all"
           >
-            {isProcessing ? 'Restarting...' : '↻'}
+            {t('restart', 'agents')}
           </button>
         </div>
       </div>
 
-      {/* MCP Status Indicator */}
-      <div className="absolute bottom-2 left-4">
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          <span className="text-xs text-gray-500">MCP Connected</span>
+      {/* Processing Overlay */}
+      {isProcessing && (
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
+            <p className="text-sm text-gray-600">{t('processing', 'common')}</p>
+          </div>
         </div>
-      </div>
+      )}
     </motion.div>
   )
 }

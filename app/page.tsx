@@ -798,7 +798,10 @@ export default function Tax4USDashboard() {
 
               {agentRequests.length === 0 && (
                 <EmptyState
-                  type="requests"
+                  icon={<span className="text-3xl">📝</span>}
+                  title={t('noRequests', 'requests')}
+                  description={t('noRequestsDescription', 'requests')}
+                  actionLabel={t('makeRequest', 'requests')}
                   onAction={() => setShowRequestModal(true)}
                 />
               )}
